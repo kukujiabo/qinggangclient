@@ -167,53 +167,15 @@ export default {
 
   created() {
 
-    let token = getToken()
+    this.init()
 
-    if (token) {
+  },
 
-      this.token = token
+  actived() {
 
-      let memberInfo = Db.get('auth')
+    console.log(12)
 
-      if (memberInfo) {
-
-        this.memberInfo = memberInfo
-
-      }
-
-    }
-
-    MemberApi.checkPartner({}).then(res => {
-
-      if (res.ret == 200) {
-
-        this.agent = res.data
- 
-      } else {
-
-        this.agent = 0
-
-      }
-
-      return res.ret
-
-    }).then(res => {
-
-      if (res == 200) {
-
-        AccountApi.getDetail({}).then(res => {
-
-          if (res.ret == 200 && res.data) {
-
-            this.account = res.data
-
-          }
-
-        })
-
-      }
-
-    })
+    this.init()
 
   },
 
@@ -247,6 +209,58 @@ export default {
 
   },
   methods: {
+
+    init() {
+
+      let token = getToken()
+
+      if (token) {
+
+        this.token = token
+
+        let memberInfo = Db.get('auth')
+
+        if (memberInfo) {
+
+          this.memberInfo = memberInfo
+
+        }
+
+      }
+
+      MemberApi.checkPartner({}).then(res => {
+
+        if (res.ret == 200) {
+
+          this.agent = res.data
+  
+        } else {
+
+          this.agent = 0
+
+        }
+
+        return res.ret
+
+      }).then(res => {
+
+        if (res == 200) {
+
+          AccountApi.getDetail({}).then(res => {
+
+            if (res.ret == 200 && res.data) {
+
+              this.account = res.data
+
+            }
+
+          })
+
+        }
+
+      })
+
+    },
 
     toQrcode() {
 

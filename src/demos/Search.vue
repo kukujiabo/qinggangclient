@@ -31,7 +31,7 @@
               <div class="item-title-row">           
                 <div class="item-text ft60 brief" @click="toDetail(card.id)">{{card.brief}}</div>
                 <div>
-                  <m-button width="55" class="ft60 button-tiny" size="small" type="warning">申请</m-button>
+                  <m-button width="55" class="ft60 button-tiny" size="small" type="warning" @click.native="toDetail(card.id)">申请</m-button>
                 </div>
               </div>
               <div class="item-title-row" style="line-height: 28px; " @click="toDetail(card.id)"> 

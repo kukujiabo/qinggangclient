@@ -23,7 +23,9 @@
       </footer-item>
     </page-footer>
     <confirm :title="'Hello'" :content="'Hello there!'" :on-ok="toLogin" ref="confirm"></confirm>
-    <component v-show="au_checked" :is="currentView" @switchTab="switchView"></component>
+    <keep-alive>
+      <component v-show="au_checked" :is="currentView" @switchTab="switchView"></component>
+    </keep-alive>
   </div>
 </template>
 

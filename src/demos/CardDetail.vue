@@ -6,11 +6,13 @@
           <img class="card-image" :src="card.thumbnail" style="width:100%">
       </div>
       <div class="card-info">
-        <p class="ft75 bold">{{card.shop_name}}</p>
-        <div class="ft60 number-info">
+        <p class="ft85 bold">{{card.shop_name}}</p>
+        <div class="ft75 number-info">
            <span>下卡数：{{card.num}}</span>
            <span>最高额度：¥ {{card.ext_2}}</span>
+           <!--
            <span>佣金：¥ {{card.commission}}</span>
+           -->
         </div>
         <router-link :to="{ path: '/apply', query: { url: card.words, type: 'card', id: card.id } }">
             <m-button type="warning">立即申请</m-button>
