@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <page-footer>
+    <page-footer v-show="au_checked">
       <footer-item class="footer-tab" v-bind:class="{ 'active' : currentView === 'home' }" @click.native="changeView('home')">
         <span class="icon demo-icon-home"></span>
         <label>首页</label>
@@ -22,7 +22,6 @@
         <label>我的</label>
       </footer-item>
     </page-footer>
-    <confirm :title="'Hello'" :content="'Hello there!'" :on-ok="toLogin" ref="confirm"></confirm>
     <keep-alive>
       <component v-show="au_checked" :is="currentView" @switchTab="switchView"></component>
     </keep-alive>
@@ -44,106 +43,78 @@ import { getToken, isWechat, getAgent, getIndexTab, setIndexTab } from '@/utils/
 import Db from '@/db'
 import NotifyLogin from './NotifyLogin'
 import Cookies from '@/utils/auth'
+import util from '@/util'
+
+const domain = "http://qinggang.xinxingtianxia.com"
+
+const menus = [ 'home', 'search', 'about', 'noti', 'agent', 'agentInfo', 'agentApply' ] 
 
 export default {
-  created() {
 
-    let menus = [ 'home', 'search', 'about', 'noti', 'agent', 'agentInfo', 'agentApply' ]
+  created() {
 
     let auth = {}
 
-    this.au_checked = Db.get('au_checked')
-
-    if (isWechat()) {
+    if (isWechat()) { 
+    
+      /**
+       * 在微信浏览器中打开时
+       * 
+       * 检验是否获取到用户信息
+       * 检验是否已经调用过微信鉴权
+       */
 
       auth = this.auth = Db.get('auth')
 
+      this.au_checked = Db.get('au_checked')
+
+      /**
+       * 查询是否有跳转页面
+       */
+
+      this.authRedirect()
+
     } else {
+
+      /**
+       * 在普通浏览器中打开时
+       */
 
       if (!this.auth) {
 
         this.auth = true
 
-      }
-
-    }
-
-    if (isWechat()) {
-
-      Wx({
-        title: '云上信-信贷新口子',
-        desc: '云上信从事金融信息服务，提供优质金融营销管理工具，提供信用卡办理，贷款办理最新资料，广招全国代理，诚信结算，诚邀广大代理商合作！',
-        link: 'http://qinggang.xinxingtianxia.com?reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1),
-        imgUrl: 'http://p4zs4o36y.bkt.clouddn.com/logo.png'
-      })
-
-    }
-
-    var redirect = Db.get('auth_redirect')
-
-    if (redirect) {
-
-      Db.set('auth_redirect', '')
-
-      let authQuery = Db.get('auth_redirect_query')
-
-      let queryString = ''
-
-      for(var key in authQuery) {
-
-        queryString += key + '=' + authQuery[key] + '&'
+        this.au_checked = true
 
       }
-
-      Db.set('auth_redirect_query', '')
-
-      window.location.href = redirect + '?' + queryString
 
     }
 
     /**
      * 设置启动页面
      */
+    this.initTab()
 
-    let tab = this.$route.query.tab
+  },
+  mounted() {
 
-    if (tab) {
+    if (isWechat()) {
 
-      this.changeView(tab)
+      /**
+       * 配置微信分享页面
+       */
+      let auth = this.auth = Db.get('auth')
 
-    } else {
+      if (auth) {
 
-      tab = getIndexTab()
-
-      if (tab) {
-
-        this.changeView(tab)
-
-      } else {
-
-        this.changeView('home')
-
-      }
-
-    }
-
-    let validMenu = false
-
-    for(let i = 0; i < menus.length; i++) {
-
-      if (tab == menus[i]) {
-
-        validMenu = true
-      
-        break
+        Wx({
+          title: '云上信-信贷新口子',
+          desc: '云上信从事金融信息服务，提供优质金融营销管理工具，提供信用卡办理，贷款办理最新资料，广招全国代理，诚信结算，诚邀广大代理商合作！',
+          link: domain + '?reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1),
+          imgUrl: 'http://p4zs4o36y.bkt.clouddn.com/logo.png'
+        })
 
       }
-
-    }
-
-    if (!validMenu) {
-
-      this.currentView = 'home'
 
     }
 
@@ -162,12 +133,75 @@ export default {
   },
   data () {
     return {
-      currentView: '',
+      currentView: 'home',
       auth: undefined,
       au_checked: 0
     }
   },
   methods: {
+
+    /**
+     * 设置初始展示页
+     */
+    initTab() {
+
+      let tab = this.$route.query.tab
+
+      if (!tab) {
+
+        tab = getIndexTab()
+
+      }
+
+      if (!util.inArray(tab, menus) || !tab) {
+
+        tab = 'home'
+
+      }
+
+      this.changeView(tab)
+
+    },
+
+    authRedirect() {
+
+      let redirect = Db.get('auth_redirect')
+
+      Db.set('auth_redirect', '')
+
+      if (redirect) {
+
+        if (redirect == window.location.href) {
+
+          return
+
+        }
+
+        let authQuery = Db.get('auth_redirect_query')
+
+        Db.set('auth_redirect_query', '')
+
+        let queryString = ''
+
+        for(var key in authQuery) {
+
+          queryString += key + '=' + authQuery[key] + '&'
+
+        }
+
+        if (queryString.length > 0) {
+
+          window.location.href = redirect + '?' + queryString
+
+        } else {
+
+          window.location.href = redirect
+          
+        }
+
+      }
+
+    },
 
     changeView (view) {
 

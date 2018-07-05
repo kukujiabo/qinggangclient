@@ -13,5 +13,13 @@ export default {
       children = children.parentNode
     }
     return false
+  },
+  inArray (ele, arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (ele === arr[i]) {
+        return true
+      }
+    }
+    return false
   }
 }

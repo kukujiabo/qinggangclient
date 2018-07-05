@@ -130,13 +130,13 @@ export default {
 
                 if (isWechat()) {
 
-                    let auth = Db.get('auth')
+                    let auth = Db.get('auth')            
 
                     let link = 'http://qinggang.xinxingtianxia.com/cardDetail?id=' + this.card.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
 
                     let conf = {
                         title: this.card.shop_name,
-                        desc: this.card.shop_name,
+                        desc: this.card.brief,
                         link: link,
                         imgUrl: this.card.thumbnail,
                         reconfig: true

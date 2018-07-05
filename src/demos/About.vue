@@ -66,7 +66,7 @@
           </list-item>
           <list-item>
             <div class="item-media"><img src="../assets/images/question.png" width="30"></div>
-            <div class="item-content" @click="checkAuth(5)">
+            <div class="item-content">
               <div class="item-title-row">
                 <div class="item-title ft75">联系客服</div>
                 <div class="item-after">
@@ -165,15 +165,9 @@ import AccountApi from '@/api/account'
 
 export default {
 
-  created() {
+  activated() {
 
-    this.init()
-
-  },
-
-  actived() {
-
-    console.log(12)
+    console.log(history)
 
     this.init()
 

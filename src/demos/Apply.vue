@@ -96,6 +96,7 @@ import { Button, ButtonGroup } from '../components/buttons'
 import { Form, FormItem } from '../components/form'
 import { Alert, Confirm, Prompt, Modal } from '../components/modal'
 import ApplyApi from '@/api/apply'
+import Db from '@/db'
 
 export default {
     created() {
@@ -149,7 +150,8 @@ export default {
                 contact: '',
                 phone: '',
                 address: '',
-                brief: ''
+                brief: '',
+                reference: ''
 
             },
 
@@ -199,6 +201,8 @@ export default {
                 this.loading = true
 
             }
+
+            this.form.reference = Db.get('referebce')
 
             ApplyApi.applyCredit(this.form).then(res => {
 

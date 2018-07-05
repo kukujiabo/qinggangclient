@@ -4,6 +4,7 @@ const TokenKey = 'Client-Token'
 const AgentId = 'AgentId'
 const Redirect = 'redirect'
 const Tab = 'tabView'
+const ShareLink = 'share-link'
 
 export function getToken () {
   return Cookies.get(TokenKey)
@@ -43,6 +44,14 @@ export function setIndexTab (view) {
 
 export function getIndexTab () {
   return Cookies.get(Tab)
+}
+
+export function getShareRegLink () {
+  return Cookies.get(ShareLink)
+}
+
+export function setShareRegLink (url) {
+  return Cookies.set(ShareLink, url)
 }
 
 export function isWechat () {

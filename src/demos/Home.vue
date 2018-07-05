@@ -3,7 +3,6 @@
     <page-content>
 
       <!-- 轮播图 -->
-
       <slide-wrapper>
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/Fg_a2YkLx8tUpXRKfQb-QjkwK2aK" @click="toDetail(1)"/>
@@ -17,9 +16,11 @@
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/%E4%BF%A1%E7%94%A8%E5%8D%A1.jpg"  @click="toDetail(4)"/>
         </slide>
+
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/WechatIMG591.jpeg"  @click="toDetail(5)"/>
         </slide>
+
       </slide-wrapper>
       <div class="grid-wrapper">
         <div class="grids grids-small">
@@ -415,6 +416,7 @@ export default {
     this.auth = Db.get('auth')
 
     this.getCreditList(this.listQueryCredit)
+
     this.getLoanList(this.listQueryLoan)
 
   },

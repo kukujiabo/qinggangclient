@@ -155,6 +155,9 @@ import Grid from '../components/grid'
 import { Footer, Item, FooterItem } from '../components/footer'
 import { Button, ButtonGroup } from '../components/buttons'
 import LoanApi from '@/api/reward'
+import { isWechat } from '@/utils/auth'
+import Wx from '@/utils/wx'
+import Db from '@/db'
 
 export default {
 
@@ -167,6 +170,24 @@ export default {
             if (res.ret == 200) {
 
                 this.loan = res.data
+
+                if (isWechat()) {
+
+                    let auth = Db.get('auth')            
+
+                    let link = 'http://qinggang.xinxingtianxia.com/loanDetail?id=' + this.loan.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
+
+                    let conf = {
+                        title: this.loan.reward_name,
+                        desc: this.loan.brief,
+                        link: link,
+                        imgUrl: this.loan.thumbnail,
+                        reconfig: true
+                    }
+                    
+                    Wx(conf)
+
+                }
 
             }
 

@@ -63,6 +63,7 @@ export default {
                    setToken(res.data.token)
 
                    Db.set('auth', res.data.auth)
+                   
                    Db.set('au_checked', 1)
 
                    if (res.data.auth.member_type > 0) {

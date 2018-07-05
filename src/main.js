@@ -269,6 +269,9 @@ Vum.router(router)
 
 FastClick.attach(document.body)
 
+/**
+ * 链接带有推荐人编号，则保存推荐人编号
+ */
 if (vue.$route.query.reference) {
   Db.set('referebce', vue.$route.query.reference)
 }
