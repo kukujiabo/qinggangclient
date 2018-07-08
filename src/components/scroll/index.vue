@@ -18,16 +18,16 @@
         <slot name="refresh">
           <div class="preloader"></div>
           <div class="pull-to-refresh-arrow"></div>
-          <span class="label-down">Pull Down to Refresh</span>
-          <span class="label-up">Release to Refresh</span>
-          <span class="label-refresh">Refreshing...</span>
+          <span class="label-down">再下一点</span>
+          <span class="label-up">放开刷新</span>
+          <span class="label-refresh">刷新中...</span>
         </slot>
       </div>
       <slot></slot>
       <div class="infinite-layer" v-if="enableInfinite">
         <slot name="infinite">
           <div class="infinite-preloader"></div>
-          <div>Loading...</div>
+          <div>加载更多...</div>
         </slot>
       </div>
     </div>

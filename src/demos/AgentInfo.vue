@@ -12,12 +12,12 @@
         </div>
     </div>
     <div class="tab-item" v-show="tab == 1">
-      <scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :enableInfinite="false">
+      <scroll :on-refresh="onSubagentRefresh" :on-infinite="onSubagentInfinite" :enableInfinite="subs.length >= 8">
         <div class='content-padded' v-for="sub in subs" :key="sub.id">
             <div class="partner-item" >
                 <div class="clearfix partner-top">
                     <p class="ft65 fl">办理时间：{{sub.created_at}}</p>
-                    <span  class="ft65 org-color fr" @click="toDetail(sub)">查看详情</span>
+                   <!--  <span  class="ft65 org-color fr" @click="toDetail(sub)">查看详情</span> -->
                 </div>
                 <div class="title-divide"></div>
                 <div>
@@ -51,10 +51,10 @@
       <div style="height:80px"></div>
     </div>
     <div class="tab-item"  v-show="tab == 2">
-      <scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :enableInfinite="false">
+      <scroll :on-refresh="onCardRefresh" :on-infinite="onCardInfinite" :enableInfinite="cards.length >= 8">
             <div class='content-padded' >
                 <div class="partner-item" v-for="card in cards" :key="card.id">
-                    <p class="ft75">{{card.shop_name}}</p>
+                    <p class="ft75 bold" style="margin: 6px 0">{{card.shop_name}}</p>
                     <div class="title-divide"></div>
                     <div>
                         <div class="agent-info ft75">
@@ -114,6 +114,7 @@
         position: absolute;
         left: 0;
         right: 0;
+        z-index: 1000;
         line-height: 45px;
         border-bottom: 1px solid #f3f5f7;
     }
@@ -150,7 +151,7 @@
     .tab-item {
         left: 0;
         right: 0;
-        top: 45px;
+        top: 0;
         bottom: 0;
         position: absolute;
     }
@@ -198,6 +199,7 @@ import Scroll from '../components/scroll'
 import Grid from '../components/grid'
 import MemberApi from '@/api/member'
 import Preloader from '../components/preloader'
+import Toast from '../components/toast'
 
 export default {
 
@@ -205,16 +207,23 @@ export default {
         SimpleHeader,
         Grid,
         Scroll,
-        Preloader
+        Preloader,
+        Toast
     },
 
     created() {
 
-        this.getPartnerList()
+        this.$nextTick(() => {
 
-        this.getReferenceCards()
+            this.showPreloader()
+                
+        })
 
-        this.getReferenceLoans()
+        this.getPartnerList(this.listQueryPartner)
+
+        this.getReferenceCards(this.listQueryCard)
+
+        this.getReferenceLoans(this.listQueryLoan)
 
     },
 
@@ -227,7 +236,25 @@ export default {
             subs: [],
             cards: [],
             loans: [],
-            show: false
+            show: false,
+            listQueryPartner: {
+                member_name: '',
+                page: 1,
+                page_size: 10,
+                order: ''
+            },
+            listQueryCard: {
+                member_name: '',
+                page: 1,
+                page_size: 10,
+                order: ''
+            },
+            listQueryLoan: {
+                member_name: '',
+                page: 1,
+                page_size: 10,
+                order: ''
+            }
 
         }
 
@@ -247,25 +274,45 @@ export default {
 
         },
 
-        getPartnerList() {
+        getPartnerList(params, done) {
 
-            this.$nextTick(() => {
+            let query = {}
 
-                this.showPreloader()
-                
-            })
+            for(var k in params) {
 
-            MemberApi.getReferenceList({
+                if (params[k] != '') {
 
-                page: 1, page_size: 100
+                    query[k] = params[k]
 
-            }).then(res => {
+                }
+
+            }
+
+            MemberApi.getReferenceList(query).then(res => {
+
+                if (typeof done === 'function') {
+
+                    done()
+
+                }
 
                 this.hidePreloader()
 
                 if (res.ret == 200) {
 
-                    this.subs = res.data.list
+                    if (res.data.page < query.page ) {
+
+                        this.listQueryPartner.page = res.data.page
+
+                    }  else {
+
+                        res.data.list.forEach(element => {
+                            
+                            this.subs.push(element)
+
+                        })
+
+                    }
 
                 }
 
@@ -285,17 +332,43 @@ export default {
 
         },
 
-        getReferenceCards() {
+        getReferenceCards(params, done) {
 
-            MemberApi.getReferenceCards({
+            let query = {}
 
-                page: 1, page_size: 100
+            for(var k in params) {
 
-            }).then(res => {
+                if (params[k] != '') {
+
+                    query[k] = params[k]
+
+                }
+
+            }
+
+            MemberApi.getReferenceCards(query).then(res => {
+
+                if (typeof done === 'function') {
+
+                    done()
+
+                }
 
                 if (res.ret == 200) {
 
-                    this.cards = res.data.list
+                    if (res.data.page < query.page) {
+
+                        this.listQueryCard.page = res.data.page
+
+                    } else {
+
+                        res.data.list.forEach(card => {
+
+                            this.cards.push(card)
+
+                        })
+
+                    }
 
                 }
 
@@ -318,6 +391,54 @@ export default {
                 }
 
             })
+
+        },
+
+        /**
+         * 刷新合伙人列表
+         */
+        onSubagentRefresh(done) {
+
+            this.listQueryPartner.page = 1
+
+            this.subs = []
+
+            this.getPartnerList(this.listQueryPartner, done)
+
+        },
+
+        /**
+         * 加载更多合伙人
+         */
+        onSubagentInfinite(done) {
+
+            this.listQueryPartner.page += 1
+
+            this.getPartnerList(this.listQueryPartner, done)
+
+        },
+
+        /**
+         * 刷新办理的信用卡列表
+         */
+        onCardRefresh(done) {
+
+            this.listQueryCard.page = 1
+
+            this.cards = []
+
+            this.getReferenceCards(this.listQueryCard, done)
+
+        },
+
+        /**
+         * 加载更多信用卡
+         */
+        onCardInfinite(done) {
+
+            this.listQueryCard.page += 1
+
+            this.getReferenceCards(this.listQueryCard, done)
 
         }
 

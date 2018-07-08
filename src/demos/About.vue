@@ -17,8 +17,8 @@
                 </span>
               </div>
               <div class="money-info c-itm wt-color" >
-                <p class="ft65" v-if="token && agent && account">账户余额：¥ {{account.rest}}</p>
-                <p class="ft65" v-if="token && agent && account">历史余额：¥ {{account.history}}</p>
+                <p class="ft65" v-if="memberInfo.member_type > 1 && memberInfo.mobile">账户余额：¥ {{account.rest}}</p>
+                <p class="ft65" v-if="memberInfo.member_type > 1 && memberInfo.mobile">历史余额：¥ {{account.history}}</p>
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
               </div>
             </div>
           </list-item>
-          <list-item>
+          <list-item v-if="memberInfo.mobile && memberInfo.member_type > 1">
             <div class="item-media"><img src="../assets/images/rewards.png" width="30"></div>
             <div class="item-content" @click="checkAuth(3)">
               <div class="item-title-row">

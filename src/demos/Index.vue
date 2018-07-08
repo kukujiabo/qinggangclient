@@ -13,7 +13,7 @@
         <span class="icon demo-icon-noti"></span>
         <label>贷款</label>
       </footer-item>
-      <footer-item class="footer-tab" v-bind:class="{ 'active' : ( currentView === 'agentInfo' || currentView === 'agentApply' || currentView === 'notifyLogin' ) }" @click.native="changeView('agent')">
+      <footer-item v-if="auth && auth.member_type != 1" class="footer-tab" v-bind:class="{ 'active' : ( currentView === 'agentInfo' || currentView === 'agentApply' || currentView === 'notifyLogin' ) }" @click.native="changeView('agent')">
         <span class="icon demo-icon-agent"></span>
         <label>合伙人</label>
       </footer-item>

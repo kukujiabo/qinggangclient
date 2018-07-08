@@ -19,7 +19,7 @@ export default (options, header) => {
     }],
     headers: options.headers ? options.headers : {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'CX-TOKEN': getToken()
+      'CX-TOKEN': getToken() ? getToken() : 'client'
     }
   }).then(response => {
     const result = response.data

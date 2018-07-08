@@ -53,7 +53,6 @@ export default {
       }, 2000)
     },
     onInfinite (done) {
-      console.log('infinite')
       setTimeout(function () {
         var f = document.createDocumentFragment()
         for (let i = 0; i < 10; i++) {

@@ -5,6 +5,9 @@
       <!-- 轮播图 -->
       <slide-wrapper>
         <slide>
+            <img src="http://p7vsax0lb.bkt.clouddn.com/WechatIMG560.jpeg" @click="toDetail(7)"/>
+        </slide>
+        <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/Fg_a2YkLx8tUpXRKfQb-QjkwK2aK" @click="toDetail(1)"/>
         </slide>
         <slide>
@@ -15,10 +18,6 @@
         </slide>
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/%E4%BF%A1%E7%94%A8%E5%8D%A1.jpg"  @click="toDetail(4)"/>
-        </slide>
-
-        <slide>
-            <img src="http://p4zs4o36y.bkt.clouddn.com/WechatIMG591.jpeg"  @click="toDetail(5)"/>
         </slide>
 
       </slide-wrapper>
@@ -537,6 +536,9 @@ export default {
         break;
         case 5:
           this.$router.push({ path: '/cardDetail', query: { id: 15 } })
+        break;
+        case 7: 
+          this.$router.push({ path: '/loanDetail', query: { id: 21 }})
         break;
 
       }
