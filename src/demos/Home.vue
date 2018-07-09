@@ -451,7 +451,8 @@ export default {
       ],
 
       listQueryCredit: {
-
+        
+        order: 'display_order desc',
         page: 1,
         page_size: 5
 

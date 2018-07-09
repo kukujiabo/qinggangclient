@@ -14,7 +14,7 @@
            <span>佣金：¥ {{card.commission}}</span>
            -->
         </div>
-        <router-link :to="{ path: '/apply', query: { url: card.words, type: 'card', id: card.id } }">
+        <router-link :to="{ path: '/apply', query: { url: card.words, type: 'card', id: card.id, card_name: card.shop_name, thumb: card.thumbnail } }">
             <m-button type="warning">立即申请</m-button>
         </router-link>
       </div>

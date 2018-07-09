@@ -97,6 +97,8 @@ import { Form, FormItem } from '../components/form'
 import { Alert, Confirm, Prompt, Modal } from '../components/modal'
 import ApplyApi from '@/api/apply'
 import Db from '@/db'
+import Wx from '@/utils/wx'
+import { isWechat } from '@/utils/auth'
 
 export default {
     created() {
@@ -114,6 +116,24 @@ export default {
         } else {
             
             this.banner = this.$route.query.image
+
+        }
+
+        if (isWechat()) {
+
+            let auth = Db.get('auth')            
+
+            let link = 'http://qinggang.xinxingtianxia.com/apply?url=' + this.url + '&type=' + this.form.type + '&id=' + this.form.relat_id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
+
+            let conf = {
+                title: this.$route.query.card_name,
+                link: link,
+                desc: '审批快，额度高',
+                imgUrl: this.$route.query.thumb,
+                reconfig: true
+            }
+                    
+            Wx(conf)
 
         }
 

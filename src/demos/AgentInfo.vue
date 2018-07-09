@@ -12,6 +12,10 @@
         </div>
     </div>
     <div class="tab-item" v-show="tab == 1">
+      <div class="search">
+        <input type="text" class="text-center ft75" placeholder="输入代理名称查询..." v-model="listQueryPartner.member_name">
+        <button class="ft65">查询</button>
+      </div>
       <scroll :on-refresh="onSubagentRefresh" :on-infinite="onSubagentInfinite" :enableInfinite="subs.length >= 8">
         <div class='content-padded' v-for="sub in subs" :key="sub.id">
             <div class="partner-item" >
@@ -32,15 +36,18 @@
                 </div>
                 <div>
                     <div class="grid-wrapper">
-                        <div class="grids text-center">
-                            <div class="grid ft60">
-                                <p class="grid_label">客户数：{{sub.sub_count}}</p>
+                        <div class="grids text-center partner-count">
+                            <div class="grid ft75">
+                                <p class="bold">{{sub.sub_count}}</p>
+                                <p class="ft65 grid_label">客户数</p>
                             </div>
-                            <div class="grid ft60">
-                                <p class="grid_label">卡进件数：{{sub.card_apply_num}}</p>
+                            <div class="grid ft75">
+                                <p class="bold">{{sub.card_apply_num}}</p>
+                                <p class="ft65 grid_label">卡进件数</p>
                             </div>
-                            <div class="grid ft60">
-                                <p class="grid_label">贷进件数：{{sub.loan_apply_num}}</p>
+                            <div class="grid ft75">
+                                <p class="bold">{{sub.loan_apply_num}}</p>
+                                <p class="ft65 grid_label">贷进件数</p>
                             </div>
                         </div>
                     </div>
@@ -51,17 +58,23 @@
       <div style="height:80px"></div>
     </div>
     <div class="tab-item"  v-show="tab == 2">
+      <div class="search">
+        <input type="text" class="text-center ft75" placeholder="输入办理人名称查询..." v-model="listQueryCard.name">
+        <button class="ft65">查询</button>
+      </div>
       <scroll :on-refresh="onCardRefresh" :on-infinite="onCardInfinite" :enableInfinite="cards.length >= 8">
             <div class='content-padded' >
                 <div class="partner-item" v-for="card in cards" :key="card.id">
-                    <p class="ft75 bold" style="margin: 6px 0">{{card.shop_name}}</p>
+                    <div>
+                        <p class="ft75 bold fl" style="margin: 6px 0">{{card.shop_name}}</p>
+                        <p class="ft75 bold fr" style="margin: 6px 0" v-if="card.reference_name">推荐人：{{card.reference_name}}</p>
+                        <div style="clear:both"></div>
+                    </div>
                     <div class="title-divide"></div>
                     <div>
                         <div class="agent-info ft75">
                             <span class="fl">{{card.contact}}</span>
-                            <span class="fl"> | </span>
-                            <span class="fl">{{card.phone}}</span>
-                            
+                            <span class="fl">（{{card.phone}}）</span>
                             <span class="fr org-color" v-if="card.state == 0">审核中</span>
                             <span class="fr grn-color" v-if="card.state == 1">通过</span>
                             <span class="fr red-color" v-if="card.state == 2">拒绝</span>
@@ -79,16 +92,23 @@
       </scroll>
     </div>
     <div class="tab-item"  v-show="tab == 3">
-      <scroll :on-refresh="onRefresh" :on-infinite="onInfinite" :enableInfinite="false">
+      <div class="search">
+        <input type="text" class="text-center ft75" placeholder="输入申请人名称查询..." v-model="listQueryLoan.name">
+        <button class="ft65">查询</button>
+      </div>
+      <scroll :on-refresh="onLoanRefresh" :on-infinite="onLoanInfinite" :enableInfinite="loans.length > 8">
         <div class='content-padded'>
             <div class="partner-item" v-for="loan in loans" :key="loan.id">
-                <p class="ft75">{{loan.loan_name}}</p>
+                <div>
+                    <p class="ft75 bold fl" style="margin: 6px 0">{{loan.loan_name}}</p>
+                    <p class="ft75 bold fr" style="margin: 6px 0" v-if="loan.reference_name">推荐人：{{loan.reference_name}}</p>
+                    <div style="clear:both"></div>
+                </div>
                 <div class="title-divide"></div>
                 <div>
                     <div class="agent-info ft75">
                         <span class="fl">{{loan.contact}}</span>
-                        <span class="fl"> | </span>
-                        <span class="fl">{{loan.phone}}</span>
+                        <span class="fl">（{{loan.phone}}）</span>
                          <span class="fr org-color">审核中</span>
                         <div style="clear:both"></div>
                     </div>
@@ -151,7 +171,7 @@
     .tab-item {
         left: 0;
         right: 0;
-        top: 0;
+        top: 42px;
         bottom: 0;
         position: absolute;
     }
@@ -188,7 +208,38 @@
         visibility:hidden;
         clear:both;
     }
-
+    .partner-count p {
+        margin: 3px 0
+    }
+    .search {
+        position: absolute;
+        z-index: 1001;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #f3f5f7;
+        height: 50px;
+        padding: .5rem;
+    }
+    .search input {
+        width:100%;
+        background: #fff;
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        height: 1.8rem;
+        outline: none;
+        border: 0;
+    }
+    .search button {
+        padding: 5px;
+        border-radius: 3px;
+        position: absolute;
+        right: .7rem;
+        top: .65rem;
+        background: #2c2c2c;
+        color: #fff;
+        border: 0;
+    }
 </style>
 
 
@@ -200,6 +251,7 @@ import Grid from '../components/grid'
 import MemberApi from '@/api/member'
 import Preloader from '../components/preloader'
 import Toast from '../components/toast'
+import Db from '@/db'
 
 export default {
 
@@ -225,12 +277,14 @@ export default {
 
         this.getReferenceLoans(this.listQueryLoan)
 
+        this.auth = Db.get('auth')
+
     },
 
     data() {
 
         return {
-
+            auth: {},
             tab: 1,
             onInfinite: true,
             subs: [],
@@ -244,13 +298,13 @@ export default {
                 order: ''
             },
             listQueryCard: {
-                member_name: '',
+                name: '',
                 page: 1,
                 page_size: 10,
                 order: ''
             },
             listQueryLoan: {
-                member_name: '',
+                name: '',
                 page: 1,
                 page_size: 10,
                 order: ''
@@ -376,17 +430,44 @@ export default {
 
         },
 
-        getReferenceLoans() {
+        getReferenceLoans(params, done) {
 
-            MemberApi.getReferenceLoans({
+            let query = {}
 
-                page: 1, page_size: 100
+            for(var k in params) {
 
-            }).then(res => {
+                if (params[k] != '') {
+
+                    query[k] = params[k]
+
+                }
+
+            }
+
+            MemberApi.getReferenceLoans(query).then(res => {
+
+
+                if (typeof done === 'function') {
+
+                    done()
+
+                }
 
                 if (res.ret == 200) {
 
-                    this.loans = res.data.list
+                    if (res.data.page < query.page) {
+
+                        this.listQueryCard.page = res.data.page
+
+                    } else {
+
+                        res.data.list.forEach(element => {
+
+                            this.loans.push(element)
+
+                        })
+
+                    }
 
                 }
 
@@ -439,6 +520,30 @@ export default {
             this.listQueryCard.page += 1
 
             this.getReferenceCards(this.listQueryCard, done)
+
+        },
+
+        /**
+         * 刷新办理的贷款列表
+         */
+        onLoanRefresh(done) {
+
+            this.listQueryLoan.page = 1
+
+            this.loans = []
+
+            this.getReferenceLoans(this.listQueryLoan, done)
+
+        },
+
+        /**
+         * 加载更多贷款
+         */
+        onLoanInfinite(done) {
+
+            this.listQueryLoan.page +=1 
+
+            this.getReferenceLoans(this.listQueryLoan, done)
 
         }
 

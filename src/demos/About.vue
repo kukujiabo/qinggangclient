@@ -14,6 +14,8 @@
                     <span class="wt-color">用户登录</span>
                   </router-link>
                   <span class="wt-color" v-if="memberInfo.mobile">{{memberInfo.member_name}}</span>
+                  <span class="wt-color" v-if="memberInfo.mobile && memberInfo.member_type == 2">（金牌代理）</span>
+                  <span class="wt-color" v-if="memberInfo.mobile && memberInfo.member_type == 3">（钻石代理）</span>
                 </span>
               </div>
               <div class="money-info c-itm wt-color" >
@@ -124,7 +126,8 @@
     padding: 5px 0;
   }
   .c-itm span {
-    padding: 0 12px;
+    padding: 0 .5rem;
+    max-width: 4rem;
   }
   .c-itm p {
     padding: 5px 0 0 8px;
