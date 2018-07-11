@@ -29,8 +29,8 @@
                         <span class="fl over-elips" style="max-width:6rem">{{sub.member_name}}</span>
                         <span class="fl">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span class="fl">{{sub.mobile}}</span>
-                        <span class="fr" v-if="sub.member_type == 2">二级代理</span>
-                        <span class="fr" v-if="sub.member_type == 1">普通客户</span>
+                        <span class="fr" v-if="sub.member_type == 2">金牌代理</span>
+                        <span class="fr" v-if="sub.member_type == 1">代理客户</span>
                         <div style="clear:both"></div>
                     </div>
                 </div>

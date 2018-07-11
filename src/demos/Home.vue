@@ -5,10 +5,16 @@
       <!-- 轮播图 -->
       <slide-wrapper>
         <slide>
-            <img src="http://p7vsax0lb.bkt.clouddn.com/WechatIMG560.jpeg" @click="toDetail(7)"/>
+          <img src="http://p4zs4o36y.bkt.clouddn.com/WechatIMG715_meitu_1.jpg" @click="toDetail(10)">
         </slide>
         <slide>
-            <img src="http://p4zs4o36y.bkt.clouddn.com/Fg_a2YkLx8tUpXRKfQb-QjkwK2aK" @click="toDetail(1)"/>
+          <img src="http://p4zs4o36y.bkt.clouddn.com/1431921078454.png" @click="toDetail(9)">
+        </slide>
+        <slide>
+            <img src="http://p4zs4o36y.bkt.clouddn.com/FgUVAxNZpJq77blQy6ofMnTRe1c_" @click="toDetail(8)"/>
+        </slide>
+        <slide>
+            <img src="http://p7vsax0lb.bkt.clouddn.com/WechatIMG560.jpeg" @click="toDetail(7)"/>
         </slide>
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/FkHomMeXXmlPRluSCsqMabE4BxpJ" @click="toDetail(2)"/>
@@ -19,7 +25,6 @@
         <slide>
             <img src="http://p4zs4o36y.bkt.clouddn.com/%E4%BF%A1%E7%94%A8%E5%8D%A1.jpg"  @click="toDetail(4)"/>
         </slide>
-
       </slide-wrapper>
       <div class="grid-wrapper">
         <div class="grids grids-small">
@@ -85,7 +90,10 @@
             </div>
             <div class="item-title-row">
               <span class="tag tag-red" v-if="auth && auth.member_type > 1 && card.account_date == 2">每周结算</span>
-             </div>
+              <span class="tag tag-gray" v-if="auth && auth.member_type > 1 && card.account_date == 3">每月结算</span>
+              <span class="tag tag-red" v-if="auth && auth.member_type > 1 && card.audit_type == 1">下卡结算</span>
+              <span class="tag tag-gray" v-if="auth && auth.member_type > 1 && card.audit_type == 2">首刷结算</span>
+            </div>
           </div>
         </list-item>
       </list>
@@ -99,7 +107,10 @@
             </div>
             <div class="item-content">
               <div class="item-title-row">
-                <div class="item-title ft75">{{loan.reward_name}} <span class="org-color ft65" v-if="auth && auth.member_type == 2">(佣金：{{loan.reward_type == 1 ? loan.sub_reward + '%' : loan.sub_reward + '元'}})</span><span  class="org-color ft65" v-if="auth && auth.member_type == 3">(佣金：{{loan.reward_type == 1 ? (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '%' : (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '元'}})</span></div>
+                <div class="item-title ft75">{{loan.reward_name}} 
+                  <span class="org-color ft65" v-if="auth && auth.member_type == 2">(佣金：{{loan.reward_type == 1 ? loan.sub_reward + '%' : loan.sub_reward + '元'}})</span>
+                  <span  class="org-color ft65" v-if="auth && auth.member_type == 3">(佣金：{{loan.reward_type == 1 ? (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '%' : (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '元'}})</span>
+                </div>
                 <div class="item-after">
                   <div>
                     <img class="va-mid" src="../assets/images/qr_code_light.png" width="24" @click="toLoanQrcode(loan)">
@@ -112,7 +123,7 @@
                     最高可贷： {{loan.max_credit}}
                   </div>
                   <div class="item-text ft60">
-                    按月利率：{{loan.rate}}%
+                    按月利率：{{loan.rate}}
                   </div>
                   <div class="item-text ft60">
                     贷款期限：{{loan.limit}}
@@ -541,7 +552,15 @@ export default {
         case 7: 
           this.$router.push({ path: '/loanDetail', query: { id: 21 }})
         break;
-
+        case 8: 
+          this.$router.push({ path: '/loanDetail', query: { id: 28 }})
+        break;
+        case 9:
+          this.$router.push({ path: '/loanDetail', query: { id: 31 }})
+        break;
+        case 10:
+          this.$router.push({ path: '/loanDetail', query: { id: 17 }})
+        break;
       }
 
     },

@@ -14,7 +14,7 @@
            <span>佣金：¥ {{card.commission}}</span>
            -->
         </div>
-        <router-link :to="{ path: '/apply', query: { url: card.words, type: 'card', id: card.id, card_name: card.shop_name, thumb: card.thumbnail } }">
+        <router-link :to="{ path: '/apply', query: { type: 'card', id: card.id, object_name: card.shop_name, thumb: card.thumbnail } }">
             <m-button type="warning">立即申请</m-button>
         </router-link>
       </div>
@@ -114,6 +114,10 @@ import { isWechat } from '@/utils/auth'
 import Wx from '@/utils/wx'
 import Db from '@/db'
 
+const protocol = document.location.protocol   + '//'
+
+const domain = protocol + "qinggang.xinxingtianxia.com"
+
 export default {
 
     created() {
@@ -132,7 +136,7 @@ export default {
 
                     let auth = Db.get('auth')            
 
-                    let link = 'http://qinggang.xinxingtianxia.com/cardDetail?id=' + this.card.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
+                    let link = domain + '/cardDetail?id=' + this.card.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
 
                     let conf = {
                         title: this.card.shop_name,

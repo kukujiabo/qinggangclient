@@ -1,6 +1,6 @@
 <template>
   <div class="my-page">
-    <simple-header class="bg-org wt-color" title="合伙人" ></simple-header>
+    <simple-header class="bg-org wt-color" title="个人中心" ></simple-header>
     <page-content>
       <div class="content">
         <div class="user-card">

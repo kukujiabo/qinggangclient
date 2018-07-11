@@ -45,7 +45,9 @@ import NotifyLogin from './NotifyLogin'
 import Cookies from '@/utils/auth'
 import util from '@/util'
 
-const domain = "http://qinggang.xinxingtianxia.com"
+const protocol = document.location.protocol + '//'
+
+const domain = protocol + "qinggang.xinxingtianxia.com"
 
 const menus = [ 'home', 'search', 'about', 'noti', 'agent', 'agentInfo', 'agentApply' ] 
 

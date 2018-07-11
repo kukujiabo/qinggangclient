@@ -18,7 +18,7 @@
             </div>
             <div class="item-content">
               <div class="item-title-row">
-                <div class="item-title ft75 va-mid" @click="toDetail(card.id)">{{card.shop_name}} 
+                <div class="item-title ft75 va-mid bold" @click="toDetail(card.id)">{{card.shop_name}} 
                   <span class="org-color ft65" v-if="auth && auth.member_type == 2">（佣金：¥ {{card.sub_reward}}）</span>
                   <span class="org-color ft65" v-if="auth && auth.member_type == 3">（佣金：¥ {{parseInt(card.senior_reward) + parseInt(card.sub_reward)}}）</span>
                 </div>
@@ -40,6 +40,8 @@
               <div class="item-title-row"> 
                 <span class="tag tag-red" v-if="auth && auth.member_type > 1 && card.account_date == 2">每周结算</span>
                 <span class="tag tag-gray" v-if="auth && auth.member_type > 1 && card.account_date == 3">每月结算</span>
+                <span class="tag tag-red" v-if="auth && auth.member_type > 1 && card.audit_type == 1">下卡结算</span>
+                <span class="tag tag-gray" v-if="auth && auth.member_type > 1 && card.audit_type == 2">首刷结算</span>
               </div>
             </div>
           </list-item>

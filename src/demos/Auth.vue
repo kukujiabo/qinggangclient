@@ -5,6 +5,7 @@
 import MemberApi from '@/api/member'
 import Db from '@/db'
 import { setToken, setRedirectParams, getRedirectParams, setAgent, removeAgent } from '@/utils/auth'
+const protocol = document.location.protocol + '//'
 
 export default {
     data() {
@@ -17,7 +18,7 @@ export default {
 
                 appid: 'wx56f67359ff45ef0d',
 
-                redirect_uri: 'http://qinggang.xinxingtianxia.com/auth',
+                redirect_uri: protocol + 'qinggang.xinxingtianxia.com/auth',
 
                 response_type: 'code',
 
@@ -76,7 +77,7 @@ export default {
 
                    }
 
-                   window.location.href = 'http://qinggang.xinxingtianxia.com'
+                   window.location.href = protocol + 'qinggang.xinxingtianxia.com'
 
                 }
 

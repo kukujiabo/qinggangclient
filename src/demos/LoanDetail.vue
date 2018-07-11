@@ -24,7 +24,7 @@
                         <span class="ft50">月利率</span>
                     </div>
                     <p class="grid_label">
-                    {{loan.rate}} %
+                    {{loan.rate}}
                     </p>
                 </div>
                 <div class="grid text-center" style="padding: 5px 8px">
@@ -159,6 +159,10 @@ import { isWechat } from '@/utils/auth'
 import Wx from '@/utils/wx'
 import Db from '@/db'
 
+const protocol = document.location.protocol + '//'
+
+const domain = protocol + "qinggang.xinxingtianxia.com"
+
 export default {
 
     created() {
@@ -175,7 +179,7 @@ export default {
 
                     let auth = Db.get('auth')            
 
-                    let link = 'http://qinggang.xinxingtianxia.com/loanDetail?id=' + this.loan.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
+                    let link = domain + '/loanDetail?id=' + this.loan.id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
 
                     let conf = {
                         title: this.loan.reward_name,
@@ -215,7 +219,7 @@ export default {
 
         toApply() {
 
-            this.$router.push({ path: '/apply', query: { type: 'loan', id: this.loan.id, url: this.loan.url, image: this.loan.banner }})
+            this.$router.push({ path: '/apply', query: { type: 'loan', id: this.loan.id, object_name: this.loan.reward_name, image: this.loan.banner, thumb: this.loan.thumbnail }})
 
         }
 

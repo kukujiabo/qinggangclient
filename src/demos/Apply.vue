@@ -99,11 +99,12 @@ import ApplyApi from '@/api/apply'
 import Db from '@/db'
 import Wx from '@/utils/wx'
 import { isWechat } from '@/utils/auth'
+import CardApi from '@/api/credit'
+import LoanApi from '@/api/reward'
 
 export default {
-    created() {
 
-        this.url = this.$route.query.url
+    created() {
 
         this.form.type = this.$route.query.type
 
@@ -113,9 +114,29 @@ export default {
 
             this.banner = 'http://p4zs4o36y.bkt.clouddn.com/confirm-info.jpg'
 
+            CardApi.getDetail({ id: this.$route.query.id }).then(res => {
+
+               if (res.ret == 200) {
+
+                   this.url = res.data.words
+
+               }
+
+            })
+
         } else {
             
             this.banner = this.$route.query.image
+
+            LoanApi.getDetail({ id: this.$route.query.id }).then(res => {
+
+                if (res.ret == 200) {
+
+                    this.url = res.data.url
+
+                }
+
+            })
 
         }
 
@@ -123,10 +144,10 @@ export default {
 
             let auth = Db.get('auth')            
 
-            let link = 'http://qinggang.xinxingtianxia.com/apply?url=' + this.url + '&type=' + this.form.type + '&id=' + this.form.relat_id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
+            let link = 'http://qinggang.xinxingtianxia.com/apply?&type=' + this.form.type + '&id=' + this.form.relat_id + '&reference=' +  ( auth && auth.member_identity ? auth.member_identity : 1)
 
             let conf = {
-                title: this.$route.query.card_name,
+                title: this.$route.query.object_name,
                 link: link,
                 desc: '审批快，额度高',
                 imgUrl: this.$route.query.thumb,
@@ -193,9 +214,9 @@ export default {
                 return
 
             }
-            if (!this.form.phone) {
+            if (!this.form.phone || this.form.phone.length != 11) {
 
-                this.noticeTxt = '请正确填写手机号！'
+                this.noticeTxt = '请正确填写11位手机号！'
 
                 this.$refs.alert.open()
 
@@ -204,7 +225,7 @@ export default {
             }
             if (!this.form.address || this.form.address.length != 18) {
 
-                this.noticeTxt = '请正确填写身份证号！'
+                this.noticeTxt = '请正确填写18位身份证号！'
 
                 this.$refs.alert.open()
 

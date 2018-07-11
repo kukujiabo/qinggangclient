@@ -7,7 +7,7 @@
             <div class="item-media" @click="toLoanDetail(loan.id)"><img :src="loan.thumbnail" width="75"></div>
             <div class="item-content">
               <div class="item-title-row" >
-                <div class="item-title ft75" @click="toLoanDetail(loan.id)">{{loan.reward_name}}</div>
+                <div class="item-title ft75 bold" @click="toLoanDetail(loan.id)">{{loan.reward_name}}</div>
                 <div class="item-after">
                   <div>
                     <img class="va-mid" src="../assets/images/qr_code_light.png" width="24" @click="toLoanQrcode(loan)">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="text-right" style="width:35%" @click="toLoanDetail(loan.id)">
                   <div class="ft60 org-color" v-if="auth && auth.member_type == 3">
-                    返利：{{loan.reward_type == 1 ? (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '%' : (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '元'}}
+                    返利：{{loan.reward_type == 1 ? ((parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)).toFixed(2)) + '%' : (parseFloat(loan.senior_reward) + parseFloat(loan.sub_reward)) + '元'}}
                   </div>
                   <div class="ft60 org-color" v-if="auth && auth.member_type == 2">
                     返利：{{loan.reward_type == 1 ? loan.sub_reward + '%' : loan.sub_reward + '元'}}
@@ -105,7 +105,7 @@ export default {
 
       },
 
-      auditTypes: [ '下款', '实名注册', '授信额度' ]
+      auditTypes: [ '下款', '实名注册', '授信额度', '下载激活App' ]
 
     }
 
