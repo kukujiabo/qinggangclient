@@ -5,6 +5,9 @@
       <!-- 轮播图 -->
       <slide-wrapper>
         <slide>
+          <img src="http://p4zs4o36y.bkt.clouddn.com/WechatIMG729_meitu_2.jpg" @click="toDetail(11)">
+        </slide>
+        <slide>
           <img src="http://p4zs4o36y.bkt.clouddn.com/WechatIMG715_meitu_1.jpg" @click="toDetail(10)">
         </slide>
         <slide>
@@ -454,7 +457,7 @@ export default {
 
       ],
 
-      auditTypes: [ '下款', '实名注册', '授信额度' ],
+      auditTypes: [ '下款', '实名注册', '授信额度', '下载App并登录' ],
 
       loans: [
 
@@ -560,6 +563,9 @@ export default {
         break;
         case 10:
           this.$router.push({ path: '/loanDetail', query: { id: 17 }})
+        break;
+        case 11:
+          this.$router.push({ path: '/loanDetail', query: { id: 12 }})
         break;
       }
 

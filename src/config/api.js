@@ -41,7 +41,9 @@ export default {
     GetReferenceLoans: 'App.Partner.GetReferenceLoans',
     CheckPartner: 'App.Member.CheckPartner',
     ResetPassword: 'App.Member.ResetPassword',
-    CheckAccount: 'App.Member.ExistAccount'
+    CheckAccount: 'App.Member.ExistAccount',
+    AddFeedback: 'App.Feedback.AddFeedback',
+    GetFeedbackList: 'App.Feedback.GetList'
   },
 
   MemberReward: {

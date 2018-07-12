@@ -51,6 +51,7 @@ import QrCode from '@/demos/QrCode'
 import Aliaccount from '@/demos/Aliaccount'
 import NotifyLogin from '@/demos/NotifyLogin'
 import PartnerDetail from '@/demos/PartnerDetail'
+import Feedback from '@/demos/Feedback'
 
 Vue.use(Router)
 Vue.use(Vum)
@@ -257,6 +258,11 @@ let router = new Router({
       path: '/partnerDetail',
       name: 'partnerDetail',
       component: PartnerDetail
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      component: Feedback
     }
   ]
 })

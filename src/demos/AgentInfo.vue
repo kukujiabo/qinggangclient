@@ -171,7 +171,7 @@
     .tab-item {
         left: 0;
         right: 0;
-        top: 42px;
+        top: 45px;
         bottom: 0;
         position: absolute;
     }

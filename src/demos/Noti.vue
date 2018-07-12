@@ -105,7 +105,7 @@ export default {
 
       },
 
-      auditTypes: [ '下款', '实名注册', '授信额度', '下载激活App' ]
+      auditTypes: [ '下款', '实名注册', '授信额度', '下载App并登录' ]
 
     }
 

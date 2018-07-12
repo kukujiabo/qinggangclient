@@ -67,6 +67,17 @@
             </div>
           </list-item>
           <list-item>
+            <div class="item-media"><img src="http://p4zs4o36y.bkt.clouddn.com/g7.png" width="30"></div>
+            <div class="item-content" @click="checkAuth(5)">
+              <div class="item-title-row">
+                <div class="item-title ft75">意见反馈</div>
+                <div class="item-after">
+                  <icon icon="link"></icon>
+                </div>
+              </div>
+            </div>
+          </list-item>
+          <list-item>
             <div class="item-media"><img src="../assets/images/question.png" width="30"></div>
             <div class="item-content">
               <div class="item-title-row">
@@ -305,6 +316,12 @@ export default {
 
         break;
 
+        case 5:
+
+          this.toFeedback()
+
+        break;
+
         case 6:
 
           this.toSetting()
@@ -348,6 +365,12 @@ export default {
     toAliAccount() {
 
       this.$router.push({ path: '/aliaccount'})
+
+    },
+
+    toFeedback() {
+
+      this.$router.push({ path: '/feedback'})
 
     }
 

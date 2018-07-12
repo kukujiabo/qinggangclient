@@ -109,6 +109,24 @@ export default {
       params: params
     }
     return request(options)
+  },
+
+  addFeedback (params) {
+    const options = {
+      service: Api.Member.AddFeedback,
+      method: 'post',
+      params: params
+    }
+    return request(options)
+  },
+
+  getFeedbackList (params) {
+    const options = {
+      service: Api.Member.GetFeedbackList,
+      method: 'post',
+      params: params
+    }
+    return request(options)
   }
 
 }

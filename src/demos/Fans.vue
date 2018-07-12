@@ -65,7 +65,7 @@ export default {
 
             let memberInfo = Db.get('auth')
 
-            MemberApi.listQuery({ reference: memberInfo.member_identity }).then(res => {
+            MemberApi.listQuery({ reference: memberInfo.member_identity, page: 1, page_size: 20 }).then(res => {
 
                 if (res.ret == 200) {
 
