@@ -47,6 +47,7 @@
               <div class="item-title-row">
                   <span class="tag tag-yellow" v-if="auth && auth.member_type > 1 && loan.account_date == 1">每日结算</span>
                   <span class="tag tag-red" v-if="auth && auth.member_type > 1 && loan.account_date == 2">每周结算</span>
+                  <span class="tag tag-gray" v-if="auth && auth.member_type > 1 && loan.account_date == 3">每月结算</span>
               </div>
             </div>
           </list-item>

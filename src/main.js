@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import FastClick from 'fastclick'
 import Cookie from 'vue-cookies'
-
+import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import Vum from './vum.js'
 
 // demos
@@ -52,10 +53,15 @@ import Aliaccount from '@/demos/Aliaccount'
 import NotifyLogin from '@/demos/NotifyLogin'
 import PartnerDetail from '@/demos/PartnerDetail'
 import Feedback from '@/demos/Feedback'
+import PartnerInfo from '@/demos/PartnerInfo'
+import ProductLoanDetail from '@/demos/ProductLoanDetail'
 
 Vue.use(Router)
 Vue.use(Vum)
 Vue.use(Cookie)
+Vue.use(Element, {
+  size: 'medium'
+})
 
 let router = new Router({
   mode: 'history',
@@ -263,8 +269,20 @@ let router = new Router({
       path: '/feedback',
       name: 'feedback',
       component: Feedback
+    },
+    {
+      path: '/partnerInfo',
+      name: 'partnerInfo',
+      component: PartnerInfo
+    },
+    {
+      path: '/productLoanDetail',
+      name: 'productLoanDetail',
+      component: ProductLoanDetail
     }
+
   ]
+
 })
 
 var vue = new Vue({
