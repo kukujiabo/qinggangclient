@@ -10,6 +10,15 @@ export default {
       params: params
     }
     return request(options)
+  },
+
+  getPubTmpQrcode (params) {
+    const options = {
+      service: Api.Wechat.GetPubTmpQrcode,
+      method: 'post',
+      params: params
+    }
+    return request(options)
   }
 
 }

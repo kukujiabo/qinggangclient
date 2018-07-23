@@ -4,13 +4,13 @@
     <page-content>
       <list>
           <list-item v-for="loan in loans" :key="loan.id" >
-            <div class="item-media" @click="toLoanDetail(loan.id)"><img :src="loan.thumbnail" width="75"></div>
+            <div class="item-media" @click="toLoanDetail(loan.id)"><img class="loan-thumb" :src="loan.thumbnail" width="75"></div>
             <div class="item-content">
               <div class="item-title-row" >
                 <div class="item-title ft75 bold" @click="toLoanDetail(loan.id)">{{loan.reward_name}}</div>
                 <div class="item-after">
                   <div>
-                    <img class="va-mid" src="../assets/images/qr_code_light.png" width="24" @click="toLoanQrcode(loan)">
+                    <img class="va-mid " src="../assets/images/qr_code_light.png" width="24" @click="toLoanQrcode(loan)">
                   </div>
                 </div>
               </div>
@@ -63,6 +63,9 @@
 }
 .item-content > div {
   padding: 5px 0;
+}
+.loan-thumb {
+  border-radius: 10px;
 }
 </style>
 

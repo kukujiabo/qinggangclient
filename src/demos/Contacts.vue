@@ -31,7 +31,6 @@ const importAll = (r) => {
 }
 
 const images = importAll(require.context('../assets/images/avatar', false, /\.(png|jpe?g|svg)$/))
-console.log(images)
 
 export default {
   components: {

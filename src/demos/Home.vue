@@ -516,9 +516,7 @@ export default {
 
     toQrcode() {
 
-      let url = 'http://qinggang.xinxingtianxia.com/'
-
-      this.$router.push({ path: '/qrcode', query: { url: url } })
+      this.$router.push({ path: '/qrcode', query: { pub: 1 } })
  
     },
 

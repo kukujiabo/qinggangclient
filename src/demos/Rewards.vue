@@ -186,6 +186,12 @@ export default {
 
                         this.$refs.alert.open()
 
+                    } else if (res.ret === 110003) {
+
+                        this.noticeTxt = '您尚未绑定支付宝账户，请先绑定支付宝再提现！'
+
+                        this.$refs.alert.open()
+
                     } else {
 
                         this.noticeTxt = '系统错误，请拨打客服电话！'

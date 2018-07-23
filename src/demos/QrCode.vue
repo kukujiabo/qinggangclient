@@ -25,6 +25,8 @@ import Db from '@/db'
 import { getToken, setToken } from '@/utils/auth'
 import { Alert, Confirm, Prompt, Modal } from '../components/modal'
 import MemberApi from '@/api/member'
+import WechatApi from '@/api/wechat'
+
 
 export default {
     components: {
@@ -42,17 +44,33 @@ export default {
 
         var that = this
 
-        this.url = this.$route.query.url
+        if (this.$route.query.pub == 1) {
 
-        MemberApi.getQrcode({ url: this.url }).then(res => {
+            WechatApi.getPubTmpQrcode([]).then(res => {
 
-            if (res.ret == 200) {
+                if (res.ret == 200) {
 
-               that.draw(res.data)
+                    that.draw(res.data)
 
-            }
+                }
 
-        })
+            })
+
+        } else {
+
+            this.url = this.$route.query.url
+
+            MemberApi.getQrcode({ url: this.url }).then(res => {
+
+                if (res.ret == 200) {
+
+                    that.draw(res.data)
+
+                }
+
+            })
+
+        }
 
     },
     data() {
@@ -67,12 +85,6 @@ export default {
     },
     methods: {
 
-        getQrcode() {
-
-
-
-        },
-
         draw(qrCode) {
 
             var canvs = document.createElement('canvas')
@@ -85,38 +97,43 @@ export default {
 
             let bgImg = new Image()
 
+            let that = this
+
             bgImg.width = 350
 
             bgImg.height = 550
 
             bgImg.setAttribute("crossOrigin",'Anonymous')
 
+            let qrImg = new Image()
+
+            qrImg.width = 128
+
+            qrImg.height = 128
+
+            qrImg.onload = _ => {
+
+                context.drawImage(qrImg, 116, 362, 128, 128)
+
+                let base64 = canvs.toDataURL('image/png')
+                    
+                that.imgUrl = base64
+
+            }
+
             bgImg.onload = _ => {
                 
                 context.drawImage(bgImg, 0, 0, 350, 525)
-
-                let qrImg = new Image()
-
-                qrImg.width = 128
-
-                qrImg.height = 128
-
-                qrImg.onload = _ => {
-
-                    context.drawImage(qrImg, 116, 362, 128, 128)
-
-                    this.imgUrl = canvs.toDataURL('image/png')
-
-                }
 
                 qrImg.src = qrCode
 
             }
 
-            bgImg.src = 'http://oys4x0rd0.bkt.clouddn.com/qrcode.jpg'
+            bgImg.src = '/static/qrcode_background.jpg'
             
         }   
 
     }
+
 }
 </script>

@@ -73,7 +73,8 @@ export default {
   },
 
   Wechat: {
-    RegisterJsApi: 'App.Wechat.JsapiRegister'
+    RegisterJsApi: 'App.Wechat.JsapiRegister',
+    GetPubTmpQrcode: 'App.Wechat.GetPubTmpQrcode'
   },
 
   MemberTurn: {
